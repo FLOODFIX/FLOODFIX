@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+ <head>
+  <title>FloodFix — Meme Coin</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+</head>
+  <style>
+    /* Reset + base */
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    :root{
+      --accent:#00eaff;
+      --bg:#071024;
+      --card-bg:#0b1622;
+      --muted:#98a3b3;
+      --glass: rgba(255,255,255,0.03);
+    }
+    html,body{ height:100%; font-family:Inter,system-ui,Segoe UI,Roboto,Arial; background:linear-gradient(180deg,#06101a 0%, #071827 60%); color:#e6faff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+    /* particles layer */
+    #particles-wrapper{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+    /* page content above particles */
+    .page{ position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
+
+    /* NAV */
+    nav{
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+      padding:12px 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      backdrop-filter: blur(6px);
+      border-bottom:1px solid rgba(255,255,255,0.03);
+      position:sticky; top:0; z-index:6;
+    }
+    .nav-left{ display:flex; align-items:center; gap:12px; }
+    .nav-logo{ height:40px; width:auto; max-width:140px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,0.02); padding:4px; }
+
+    /* links (desktop) */
+    .nav-links{ display:block; }
+    .nav-links ul{ display:flex; gap:8px; list-style:none; margin:0; padding:6px; background: rgba(10,15,30,0.45); border-radius:999px; border:1px solid rgba(0,240,255,0.12); box-shadow:0 0 18px rgba(0,240,255,0.08); align-items:center; }
+    .nav-links li{ margin:0; }
+    .nav-links a{ display:inline-block; color:var(--muted); text-decoration:none; font-weight:600; padding:6px 10px; border-radius:999px; font-size:14px; transition: all .18s; }
+    .nav-links a:hover{ color:#071217; background:linear-gradient(135deg,#00f0ff,#a34aff); box-shadow:0 6px 18px rgba(0,234,255,0.12); transform:translateY(-2px); color:#001219; }
+
+    .nav-right{ display:flex; gap:10px; align-items:center; }
+    .btn{ padding:10px 16px; border-radius:12px; border:0; cursor:pointer; background:linear-gradient(90deg,var(--accent),#46f1ff); color:#001219; font-weight:700; box-shadow:0 8px 28px rgba(0,234,255,0.08); }
+    .btn.secondary{ background:transparent; color:var(--accent); border:1px solid rgba(0,234,255,0.08); box-shadow:none; }
+
+    /* mobile menu toggle */
+    .menu-toggle{ display:none; font-size:24px; color:var(--accent); background:transparent; border:0; cursor:pointer; padding:6px; }
+
+    /* HERO */
+    .hero{ padding:56px 18px; display:flex; gap:20px; align-items:flex-start; justify-content:space-between; }
+    .hero-content{ max-width:720px; width:100%; }
+    h1{ font-size:36px; line-height:1.05; margin-bottom:10px; color:#e6fbff; }
+    p.lead{ color:var(--muted); margin-bottom:12px; font-size:15px; }
+
+    /* CTA */
+    .cta{ display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
+
+    /* image / nft grid + floating/glow */
+    .image-container{ display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; }
+    .image-card{
+      width:170px; height:170px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px; padding:10px; display:flex; align-items:center; justify-content:center; overflow:hidden; transition: transform .32s, box-shadow .32s;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+    }
+    .image-card img{ width:100%; height:100%; object-fit:cover; border-radius:10px; transition: transform .36s ease, filter .36s ease; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)); }
+    .image-card:hover{ transform: translateY(-8px); box-shadow: 0 24px 48px rgba(0,234,255,0.12); }
+    .image-card:hover img{ transform: scale(1.08); filter: drop-shadow(0 28px 40px rgba(0,234,255,0.18)); }
+
+    /* small glowing "sky" halo behind images - pseudo element */
+    .image-card::before{
+      content:''; position:absolute; inset:auto; width:70%; height:70%; border-radius:50%;
+      filter: blur(18px); opacity:0.0; transition:opacity .3s;
+      background: radial-gradient(circle at 30% 30%, rgba(0,234,255,0.22), transparent 40%);
+      pointer-events:none;
+    }
+    .image-card:hover::before{ opacity:1; }
+
+    /* NFT hero box */
+    .nft-box{
+      width:320px; height:320px; border-radius:16px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+    }
+    .nft-box img{ max-width:100%; max-height:100%; object-fit:contain; border-radius:12px; transition:transform .36s; }
+    .nft-box:hover img{ transform:scale(1.03); }
+
+    /* small floating animation */
+    @keyframes floatY { 0%{ transform:translateY(0) } 50%{ transform:translateY(-8px)} 100%{ transform:translateY(0)} }
+    .float{ animation: floatY 5.5s ease-in-out infinite; }
+
+    /* list containers */
+    .list-container{ background:var(--card-bg); border-radius:12px; padding:16px; margin:12px 0; }
+    .list-container ul{ list-style:none; padding-left:0; margin:0; }
+    .list-container li{ padding:8px 0; border-bottom: 1px dashed rgba(255,255,255,0.03); font-size:15px; color:#dff7ff; }
+    .list-container li:last-child{ border-bottom:none; }
+
+    /* ROADMAP */
+    .roadmap-wrap{ position:relative; padding:46px 18px; overflow:visible; background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent); }
+    .waves{ position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0.9; }
+    .roadmap-content{ position:relative; z-index:2; max-width:1100px; margin:0 auto; }
+
+    .roadmap-svg{ width:100%; height:260px; display:block; }
+
+    .marker{ fill:var(--accent); stroke:#05202a; stroke-width:2; filter: drop-shadow(0 8px 18px rgba(0,234,255,0.12)); }
+    .marker-label{ fill:#e8fbff; font-size:13px; }
+
+    /* footer */
+    footer{ padding:18px; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.02); margin-top:18px; }
+
+    /* Responsive: mobile adjustments */
+    @media (max-width:880px){
+      .hero{ flex-direction:column; padding:36px 14px; gap:18px; }
+      .nav-links{ display:none; } /* hide desktop links on mobile */
+      .menu-toggle{ display:inline-block; }
+      .nav-right{ gap:8px; }
+      .nft-box{ width:260px; height:260px; }
+      .image-card{ width:130px; height:130px; }
+      h1{ font-size:28px; }
+    }
+
+    /* When mobile menu is open (class `.nav-open` on nav) show menu vertically */
+    nav.nav-open .nav-links{
+      display:block; position: absolute; top:64px; left:12px; right:12px; z-index:7;
+      background: linear-gradient(180deg, rgba(6,12,20,0.95), rgba(6,12,20,0.92)); border-radius:12px; padding:12px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+    }
+    nav.nav-open .nav-links ul{
+      display:flex; flex-direction:column; gap:8px; padding:6px;
+    }
+    nav.nav-open .nav-right{ display:flex; gap:8px; margin-top:8px; flex-direction:row; justify-content:center; width:100%; }
+
+    /* ensure large images don't overflow on tiny screens */
+    img{ max-width:100%; display:block; height:auto; }
+
+#near-bottom .list-container {
+    max-width: 520px;
+    margin: 25px auto;
+    padding: 20px;
+    background: rgba(10, 15, 30, 0.85);
+    border-radius: 18px;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.25),
+                0 0 45px rgba(0, 240, 255, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover container effect */
+#near-bottom .list-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 35px rgba(0, 240, 255, 0.45),
+                0 0 60px rgba(0, 240, 255, 0.30);
+}
+
+/* Title */
+#near-bottom h3 {
+    text-align: center;
+    font-size: 22px;
+    color: #00eaff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+}
+
+/* Remove bullets */
+#near-bottom ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* List items */
+#near-bottom li {
+    margin: 12px 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Links */
+#near-bottom a {
+    color: #00f0ff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    text-shadow: 0 0 12px rgba(0, 240, 255, 0.85);
+}
+
+/* Hover link neon effect */
+#near-bottom a:hover {
+    color: #ff007a;
+    text-shadow: 0 0 16px rgba(255, 0, 122, 1);
+    transform: scale(1.05);
+}
+/* 🌊 Stronger Water Glow */
+.waves svg path {
+  filter: drop-shadow(0 0 20px rgba(0, 238, 255, 0.578));
+}
+
+#bubble-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 118px; /*bubble zone height*/
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #00eaff);
+  border-radius: 50%;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 10px #00eaff);
+  animation: rise var(--speed) linear, drift 6s ease-in-out infinite;
+}
+
+@keyframes rise {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); }
+}
+
+@keyframes drift {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(25px); }
+  100% { transform: translateX(0); }
+}
+  </style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+  <title>FloodFix — Meme Coin</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  </head>
+<body>
+<!-- particles container -->
+  <!-- BACKGROUND PARTICLES -->
+<div id="particles-wrapper">
+  <div id="tsparticles" style="position: absolute; inset: 0;"></div>
+</div>
+
+  <div class="page">
+    <!-- NAV -->
+    <nav id="site-nav">
+      <div class="nav-left">
+        <!-- Logo: replace f5.jpg with your logo path -->
+        <img src="f5.jpg" alt="FloodFix logo" class="nav-logo" />
+
+        <div class="nav-links" id="nav-links">
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#buy">Flox Buy</a></li>
+            <li><a href="#tokenomics">Tokenomics</a></li>
+            <li><a href="#nft">Flox NFT</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#whitepaper">Whitepaper</a></li>
+            <li><a href="#gamefi">GameFi</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <button class="btn" onclick="buyFlox()">Buy FLOX</button>
+        <a class="btn secondary" href="#whitepaper">Whitepaper</a>
+        <!-- hamburger for mobile -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="home" class="hero">
+      <div class="hero-content">
+        <h1>Welcome to <strong>FloodFix</strong> <span style="color:var(--accent)">FLOX</span></h1>
+        <p class="lead">Meme coin with utility NFTs, GameFi & community flood protection.</p>
+
+        <div class="list-container">
+          <h3 style="margin-bottom:8px">The Meme Coin That Fixes the Chaos</h3>
+          <ul>
+            <li><strong>Meet FloodFix</strong>  the world’s first meme-powered ecosystem building around Floodi on <B>SOLANA BLOCKCHAIN</B>, your chaos-repairing mascot.</li>
+            <li><strong>What It Combines:</strong> $FLOODFIX token, Floodi NFTs, P2E mini-games, lore & seasonal drops.</li>
+            <li><strong>Why FloodFix:</strong> Story-driven universe, locked liquidity, GameFi rewards, cross-game potential.</li>
+          </ul>
+        </div>
+
+        <div class="cta">
+          <button class="btn" onclick="buyFlox()">Buy FLOX</button>
+          <button class="btn secondary" onclick="document.querySelector('#roadmap').scrollIntoView({behavior:'smooth'})">See Roadmap</button>
+        </div>
+
+        <!-- image previews (replace src with your NFT images) -->
+        <div class="image-container" aria-hidden="true">
+          <div class="image-card float"><img src="f3.jpg" alt="NFT 1 (replace)"></div>
+          <div class="image-card float"><img src="f6.jpg" alt="NFT 2 (replace)"></div>
+          <div class="image-card float"><img src="f4.jpg" alt="NFT 3 (replace)"></div>
+        </div>
+      </div>
+
+      <!-- Hero NFT box -->
+      <aside class="nft-box float" aria-hidden="true">
+        <img src="f8.jpg" alt="Hero NFT (replace)">
+      </aside>
+    </header>
+
+    <!-- FLOX Buy -->
+    <section id="buy" style="padding:24px 18px;">
+      <div class="list-container">
+        <h3>Flox Buy</h3>
+        <!--<p class="lead">Add your buy widget inside the container below.</p>-->
+        <div id="buy-widget" style="margin-top:12px;"><strong><span style="color:red">COMING SOON!!</span></strong></div>
+      </div>
+    </section>
+
+    <!-- Tokenomics -->
+    <section id="tokenomics" style="padding:18px;">
+      <div class="list-container">
+        <h3>Tokenomics</h3>
+        <ul>
+          <li><strong>COMING SOON</strong><!--- — add token allocation graphic or table here.</li>-->
+        </ul>
+      </div>
+    </section>
+
+    <!-- FLOX NFT -->
+    <section id="nft" style="padding:18px;">
+      <h2 style="margin-bottom:12px">Flox NFT</h2>
+      <div class="image-container" aria-hidden="true">
+        <div class="image-card float"><img src="f3.jpg" alt="NFT A (replace)"></div>
+        <div class="image-card float"><img src="f7.jpg" alt="NFT B (replace)"></div>
+        <div class="image-card float"><img src="f1.jpg" alt="NFT C (replace)"></div>
+        <div class="image-card float"><img src="f2.jpg" alt="NFT C (replace)"></div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap" class="roadmap-wrap">
+      <div class="waves" aria-hidden="true">
+        <div style="position:absolute;bottom:0;left:0;width:100%;overflow:hidden;height:80px;">
+          <div style="display:flex; width:200%; animation: translateX 14s linear infinite;">
+            <svg viewBox="0 0 1200 80" preserveAspectRatio="xMinYMin slice" style="width:1200px;height:80px;">
+              <path d="M0,40 C150,10 300,70 450,40 C600,10 750,70 900,40 C1050,10 1200,70 1350,40 L1350,80 L0,80 Z" fill="#002f3a" opacity="0.65"></path>
+            </svg>
+            <svg viewBox="0 0 1200 80" preserveAspectRatio="xMinYMin slice" style="width:1200px;height:80px;">
+              <path d="M0,40 C150,10 300,70 450,40 C600,10 750,70 900,40 C1050,10 1200,70 1350,40 L1350,80 L0,80 Z" fill="#01363f" opacity="0.5"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="roadmap-content">
+        <h2 style="margin-bottom:12px">Roadmap</h2>
+
+        <!-- simple curvy road -->
+        <svg class="roadmap-svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <linearGradient id="roadG" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#122a33"/><stop offset="1" stop-color="#05202a"/>
+            </linearGradient>
+          </defs>
+
+          <!-- road -->
+          <path d="M30,220 C200,180 300,60 480,100 C660,140 780,60 980,90 C1100,110 1170,90 1170,90"
+                stroke="url(#roadG)" stroke-width="36" stroke-linecap="round" fill="none" opacity="0.98"></path>
+
+          <!-- dashed center -->
+          <path d="M30,220 C200,180 300,60 480,100 C660,140 780,60 980,90 C1100,110 1170,90 1170,90"
+                stroke="#9feeff" stroke-width="6" stroke-dasharray="16 24" stroke-linecap="round" fill="none" opacity="0.95"></path>
+
+          <!-- markers -->
+          <circle class="marker" cx="120" cy="205" r="12"></circle>
+          <circle class="marker" cx="420" cy="115" r="12"></circle>
+          <circle class="marker" cx="690" cy="135" r="12"></circle>
+          <circle class="marker" cx="980" cy="95" r="12"></circle>
+        </svg>
+
+        <!-- Roadmap details below for responsive layout -->
+        <div style="margin-top:14px;">
+          <div class="list-container">
+            <ul>
+              <li><strong>🔹Relaunch & Foundation</strong>
+                <p> 🌊 Community building, lore reveal, early branding, locked liquidity.</p></li>
+              <li><strong>🔹Genesis Floodi NFTs</strong> 
+                <p>🌊 Limited character drop, early-holder perks, game boosts.</p></li>
+              <li><strong>🔹P2E Mini-Game</strong> 
+                <p>🌊 Send your Floodi on missions, earn rewards and $FLOODFIX.</p></li>
+              <li><strong>🔹Ecosystem Growth</strong> 
+                <p>🌊 New characters, collaborations, second NFT collection.</p></li>
+              <li><strong>🔹Long-Term Vision</strong> 
+                <p>🌊 Community governance, cross-game integrations, seasonal updates.</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+    <section id="water-zone">
+
+    <!-- Waves SVG -->
+    <div id="bubble-layer"></div> <!-- Only this one -->
+    <div id="underwater-fog"></div>
+    
+</section>
+
+    <!-- Whitepaper -->
+    <section id="whitepaper" style="padding:18px;">
+      <h2>Whitepaper</h2>
+      <div class="list-container" style="margin-top:12px;">
+        <p><strong><span style="color:red">COMING SOON!!</span></strong></p><br><br>
+        <a href="assets/whitepaper.pdf" target="_blank" class="btn">Open Whitepaper</a>
+      </div>
+    </section>
+
+    <!-- GameFi -->
+    <section id="gamefi" style="padding:18px;">
+      <h2>GameFi</h2>
+      <div class="list-container">
+        <p class="lead"> i will add Small GameFi integration & reward mechanics here.</p>
+        <div id="game-area" style="height:240px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);display:flex;align-items:center;justify-content:center">
+          [I will add GameFi iframe / canvas here]
+        </div>
+      </div>
+    </section>
+
+    <!-- near-bottom -->
+    <section id="near-bottom" style="padding:18px;">
+      <div class="list-container">
+        <h3>Join the FloodFix community</h3>
+        <ul>
+          <li>📩 Telegram:<a href=" https://t.me/floodfixcommunity" target="_blank">floodfixcommunity</a></li>
+          <li>🐦 Twitter (x):<a href=" https://x.com/FloodFixx" target="_blank">FloodFixx</a></li>
+          <li>💬 Facebook:<a href=" https://www.facebook.com/share/1BmiSMSXwp/" target="_blank">FloodFix</a></li>
+        </ul>
+      </div>
+    </section>
+    <!-- Bubble Zone Before Footer -->
+<section id="water-zone">
+  <div id="bubble-layer"></div>
+  <div id="underwater-fog"></div>
+</section>
+
+    <footer>© <strong>FloodFix🌊</strong> | All rights reserved.</footer>
+  </div>
+
+  <!-- tsParticles -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.min.js"></script>
+  <script>
+    /* particles config (merged into a working tsParticles config) */
+    const particlesConfig = {
+      fullScreen: { enable: false },
+      fpsLimit: 60,
+      particles: {
+        number: { value: 80, density: { enable: true, area: 800 } },
+        color: { value: "#00eaff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.45 },
+        size: { value: 3, random: { enable: true, minimumValue: 1 } },
+        move: { enable: true, speed: 0.9, random: false, outModes: { default: "out" } },
+        links: { enable: true, distance: 140, color: "#00eaff", opacity: 0.06, width: 1 }
+      },
+      interactivity: {
+        events: {
+          onHover: { enable: true, mode: "repulse" },
+          onClick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: { repulse: { distance: 80 }, push: { quantity: 2 } }
+      },
+      detectRetina: true
+    };
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        await tsParticles.load("tsparticles", particlesConfig);
+      } catch(e){ console.warn('tsParticles failed to load', e); }
+    });
+
+    /* small helpers */
+    function buyFlox(){
+      const widget = document.getElementById('buy-widget');
+      if(widget && widget.innerHTML.trim().length>0){
+        alert("Open your buy widget or implement web3 flow here.");
+      } else {
+        alert("Buy FLOX — add your buy widget code into the #buy-widget container.");
+      }
+    }
+
+    // Smooth scroll anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const href = this.getAttribute('href');
+        const target = document.querySelector(href);
+        if(target){
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+          // if nav was open (mobile), close it after click
+          document.getElementById('site-nav').classList.remove('nav-open');
+        }
+      });
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const siteNav = document.getElementById('site-nav');
+    if(menuToggle){
+      menuToggle.addEventListener('click', ()=>{
+        siteNav.classList.toggle('nav-open');
+      });
+    }
+
+    // Close mobile menu on resize to desktop
+    window.addEventListener('resize', ()=>{
+      if(window.innerWidth > 880){
+        siteNav.classList.remove('nav-open');
+      }
+    });
+  </script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  console.log("Bubble System Loaded");
+
+  const bubbleLayer = document.getElementById("bubble-layer");
+  if (!bubbleLayer) {
+    console.error("Bubble Layer NOT FOUND");
+    return;
+  }
+
+  function spawnBubbles() {
+    for (let i = 0; i < 20; i++) {
+
+      const b = document.createElement("div");
+      b.className = "bubble";
+
+      const size = Math.random() * 40 + 10;
+      b.style.width = size + "px";
+      b.style.height = size + "px";
+
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.bottom = "-80px";
+
+      b.style.setProperty("--speed", (Math.random() * 10 + 5) + "s");
+
+      bubbleLayer.appendChild(b);
+
+      setTimeout(() => b.remove(), 16000);
+    }
+  }
+
+  spawnBubbles();
+  setInterval(spawnBubbles, 2000);
+});
+</script>
+<script>
+  const bubbleLayer = document.getElementById("bubble-layer");
+
+  function spawnBubble() {
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble");
+
+    // random size
+    const size = Math.random() * 40 + 20; 
+    bubble.style.width = size + "px";
+    bubble.style.height = size + "px";
+
+    // random horizontal position
+    bubble.style.left = Math.random() * window.innerWidth + "px";
+
+    // random speed
+    bubble.style.setProperty("--speed", (6 + Math.random() * 6) + "s");
+
+    // add bubble
+    bubbleLayer.appendChild(bubble);
+
+    // remove after animation so it doesn't build up
+    setTimeout(() => bubble.remove(), 12000);
+  }
+
+  // spawn bubbles continuously
+  setInterval(spawnBubble, 350);
+</script>
+<script>
+function spawnBubbles() {
+  const layer = document.getElementById("bubble-layer");
+  if (!layer) return;
+
+  setInterval(() => {
+    const bubble = document.createElement("div");
+    bubble.classList.add("bubble");
+
+    // Random bubble size
+    const size = Math.random() * 18 + 8; 
+    bubble.style.width = size + "px";
+    bubble.style.height = size + "px";
+
+    // Random horizontal start
+    bubble.style.left = Math.random() * 100 + "%";
+
+    // Random rise speed
+    bubble.style.setProperty("--speed", (4 + Math.random() * 4) + "s");
+
+    layer.appendChild(bubble);
+
+    // Remove bubble when finished
+    setTimeout(() => bubble.remove(), 7000);
+  }, 350);
+}
+
+spawnBubbles();
+</script>
+
+</body>
+</html>
