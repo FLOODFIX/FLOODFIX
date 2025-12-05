@@ -8,207 +8,207 @@
   <link rel="icon" type="image/png" href="favicon.png" />
 </head>
   <style>
-    /* Reset + base */
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    :root{
-      --accent:#00eaff;
-      --bg:#071024;
-      --card-bg:#0b1622;
-      --muted:#98a3b3;
-      --glass: rgba(255,255,255,0.03);
-    }
-    html,body{ height:100%; font-family:Inter,system-ui,Segoe UI,Roboto,Arial; background:linear-gradient(180deg,#06101a 0%, #071827 60%); color:#e6faff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+/* Reset + base */
+*{ box-sizing:border-box; margin:0; padding:0; }
+:root{
+  --accent:#00eaff;
+  --bg:#071024;
+  --card-bg:#0b1622;
+  --muted:#98a3b3;
+  --glass: rgba(255,255,255,0.03);
+}
 
-    /* particles layer */
-    #particles-wrapper{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+/* FULL-PAGE BACKGROUND IMAGE FIX */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-image: url("f11.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed; /* makes it stay while scrolling */
+  color:#e6faff;
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
 
-    /* page content above particles */
-    .page{ position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
+/* particles layer */
+#particles-wrapper{ position:fixed; inset:0; z-index:0; pointer-events:none; }
 
-    /* NAV */
-    nav{
-      display:flex; align-items:center; justify-content:space-between; gap:1rem;
-      padding:12px 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      backdrop-filter: blur(6px);
-      border-bottom:1px solid rgba(255,255,255,0.03);
-      position:sticky; top:0; z-index:6;
-    }
-    .nav-left{ display:flex; align-items:center; gap:12px; }
-    .nav-logo{ height:40px; width:auto; max-width:140px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,0.02); padding:4px; }
+/* page content above particles */
+.page{ position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
 
-    /* links (desktop) */
-    .nav-links{ display:block; }
-    .nav-links ul{ display:flex; gap:8px; list-style:none; margin:0; padding:6px; background: rgba(10,15,30,0.45); border-radius:999px; border:1px solid rgba(0,240,255,0.12); box-shadow:0 0 18px rgba(0,240,255,0.08); align-items:center; }
-    .nav-links li{ margin:0; }
-    .nav-links a{ display:inline-block; color:var(--muted); text-decoration:none; font-weight:600; padding:6px 10px; border-radius:999px; font-size:14px; transition: all .18s; }
-    .nav-links a:hover{ color:#071217; background:linear-gradient(135deg,#00f0ff,#a34aff); box-shadow:0 6px 18px rgba(0,234,255,0.12); transform:translateY(-2px); color:#001219; }
+/* NAV */
+nav{
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:12px 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  position:sticky; top:0; z-index:6;
+}
+.nav-left{ display:flex; align-items:center; gap:12px; }
+.nav-logo{ height:40px; width:auto; max-width:140px; object-fit:contain; border-radius:8px; background:rgba(255,255,255,0.02); padding:4px; }
 
-    .nav-right{ display:flex; gap:10px; align-items:center; }
-    .btn{ padding:10px 16px; border-radius:12px; border:0; cursor:pointer; background:linear-gradient(90deg,var(--accent),#46f1ff); color:#001219; font-weight:700; box-shadow:0 8px 28px rgba(0,234,255,0.08); }
-    .btn.secondary{ background:transparent; color:var(--accent); border:1px solid rgba(0,234,255,0.08); box-shadow:none; }
+/* links (desktop) */
+.nav-links{ display:block; }
+.nav-links ul{ display:flex; gap:8px; list-style:none; margin:0; padding:6px; background: rgba(10,15,30,0.45); border-radius:999px; border:1px solid rgba(0,240,255,0.12); box-shadow:0 0 18px rgba(0,240,255,0.08); align-items:center; }
+.nav-links li{ margin:0; }
+.nav-links a{ display:inline-block; color:var(--muted); text-decoration:none; font-weight:600; padding:6px 10px; border-radius:999px; font-size:14px; transition: all .18s; }
+.nav-links a:hover{ color:#071217; background:linear-gradient(135deg,#00f0ff,#a34aff); box-shadow:0 6px 18px rgba(0,234,255,0.12); transform:translateY(-2px); color:#001219; }
 
-    /* mobile menu toggle */
-    .menu-toggle{ display:none; font-size:24px; color:var(--accent); background:transparent; border:0; cursor:pointer; padding:6px; }
+.nav-right{ display:flex; gap:10px; align-items:center; }
+.btn{ padding:10px 16px; border-radius:12px; border:0; cursor:pointer; background:linear-gradient(90deg,var(--accent),#46f1ff); color:#001219; font-weight:700; box-shadow:0 8px 28px rgba(0,234,255,0.08); }
+.btn.secondary{ background:transparent; color:var(--accent); border:1px solid rgba(0,234,255,0.08); box-shadow:none; }
 
-    /* HERO */
-    .hero{ padding:56px 18px; display:flex; gap:20px; align-items:flex-start; justify-content:space-between; }
-    .hero-content{ max-width:720px; width:100%; }
-    h1{ font-size:36px; line-height:1.05; margin-bottom:10px; color:#e6fbff; }
-    p.lead{ color:var(--muted); margin-bottom:12px; font-size:15px; }
+/* mobile menu toggle */
+.menu-toggle{ display:none; font-size:24px; color:var(--accent); background:transparent; border:0; cursor:pointer; padding:6px; }
 
-    /* CTA */
-    .cta{ display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
+/* HERO */
+.hero{ padding:56px 18px; display:flex; gap:20px; align-items:flex-start; justify-content:space-between; }
+.hero-content{ max-width:720px; width:100%; }
+h1{ font-size:36px; line-height:1.05; margin-bottom:10px; color:#e6fbff; }
+p.lead{ color:var(--muted); margin-bottom:12px; font-size:15px; }
 
-    /* image / nft grid + floating/glow */
-    .image-container{ display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; }
-    .image-card{
-      width:170px; height:170px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px; padding:10px; display:flex; align-items:center; justify-content:center; overflow:hidden; transition: transform .32s, box-shadow .32s;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.45);
-    }
-    .image-card img{ width:100%; height:100%; object-fit:cover; border-radius:10px; transition: transform .36s ease, filter .36s ease; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)); }
-    .image-card:hover{ transform: translateY(-8px); box-shadow: 0 24px 48px rgba(0,234,255,0.12); }
-    .image-card:hover img{ transform: scale(1.08); filter: drop-shadow(0 28px 40px rgba(0,234,255,0.18)); }
+/* CTA */
+.cta{ display:flex; gap:12px; margin-top:14px; flex-wrap:wrap; }
 
-    /* small glowing "sky" halo behind images - pseudo element */
-    .image-card::before{
-      content:''; position:absolute; inset:auto; width:70%; height:70%; border-radius:50%;
-      filter: blur(18px); opacity:0.0; transition:opacity .3s;
-      background: radial-gradient(circle at 30% 30%, rgba(0,234,255,0.22), transparent 40%);
-      pointer-events:none;
-    }
-    .image-card:hover::before{ opacity:1; }
+/* image / nft grid + floating/glow */
+.image-container{ display:flex; flex-wrap:wrap; gap:14px; margin-top:16px; }
+.image-card{
+  width:170px; height:170px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px; padding:10px; display:flex; align-items:center; justify-content:center; overflow:hidden; transition: transform .32s, box-shadow .32s;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+}
+.image-card img{ width:100%; height:100%; object-fit:cover; border-radius:10px; transition: transform .36s ease, filter .36s ease; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6)); }
+.image-card:hover{ transform: translateY(-8px); box-shadow: 0 24px 48px rgba(0,234,255,0.12); }
+.image-card:hover img{ transform: scale(1.08); filter: drop-shadow(0 28px 40px rgba(0,234,255,0.18)); }
 
-    /* NFT hero box */
-    .nft-box{
-      width:320px; height:320px; border-radius:16px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:12px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
-    }
-    .nft-box img{ max-width:100%; max-height:100%; object-fit:contain; border-radius:12px; transition:transform .36s; }
-    .nft-box:hover img{ transform:scale(1.03); }
+.image-card::before{
+  content:''; position:absolute; inset:auto; width:70%; height:70%; border-radius:50%;
+  filter: blur(18px); opacity:0.0; transition:opacity .3s;
+  background: radial-gradient(circle at 30% 30%, rgba(0,234,255,0.22), transparent 40%);
+  pointer-events:none;
+}
+.image-card:hover::before{ opacity:1; }
 
-    /* small floating animation */
-    @keyframes floatY { 0%{ transform:translateY(0) } 50%{ transform:translateY(-8px)} 100%{ transform:translateY(0)} }
-    .float{ animation: floatY 5.5s ease-in-out infinite; }
+/* NFT hero box */
+.nft-box{
+  width:320px; height:320px; border-radius:16px; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+}
+.nft-box img{ max-width:100%; max-height:100%; object-fit:contain; border-radius:12px; transition:transform .36s; }
+.nft-box:hover img{ transform:scale(1.03); }
 
-    /* list containers */
-    .list-container{ background:var(--card-bg); border-radius:12px; padding:16px; margin:12px 0; }
-    .list-container ul{ list-style:none; padding-left:0; margin:0; }
-    .list-container li{ padding:8px 0; border-bottom: 1px dashed rgba(255,255,255,0.03); font-size:15px; color:#dff7ff; }
-    .list-container li:last-child{ border-bottom:none; }
+/* floating */
+@keyframes floatY { 0%{ transform:translateY(0) } 50%{ transform:translateY(-8px)} 100%{ transform:translateY(0)} }
+.float{ animation: floatY 5.5s ease-in-out infinite; }
 
-    /* ROADMAP */
-    .roadmap-wrap{ position:relative; padding:46px 18px; overflow:visible; background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent); }
-    .waves{ position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0.9; }
-    .roadmap-content{ position:relative; z-index:2; max-width:1100px; margin:0 auto; }
+/* list containers */
+.list-container{ background:var(--card-bg); border-radius:12px; padding:16px; margin:12px 0; }
+.list-container ul{ list-style:none; padding-left:0; margin:0; }
+.list-container li{ padding:8px 0; border-bottom: 1px dashed rgba(255,255,255,0.03); font-size:15px; color:#dff7ff; }
+.list-container li:last-child{ border-bottom:none; }
 
-    .roadmap-svg{ width:100%; height:260px; display:block; }
+/* ROADMAP */
+.roadmap-wrap{ position:relative; padding:46px 18px; overflow:visible; background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent); }
+.waves{ position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0.9; }
+.roadmap-content{ position:relative; z-index:2; max-width:1100px; margin:0 auto; }
+.roadmap-svg{ width:100%; height:260px; display:block; }
 
-    .marker{ fill:var(--accent); stroke:#05202a; stroke-width:2; filter: drop-shadow(0 8px 18px rgba(0,234,255,0.12)); }
-    .marker-label{ fill:#e8fbff; font-size:13px; }
+.marker{ fill:var(--accent); stroke:#05202a; stroke-width:2; filter: drop-shadow(0 8px 18px rgba(0,234,255,0.12)); }
+.marker-label{ fill:#e8fbff; font-size:13px; }
 
-    /* footer */
-    footer{ padding:18px; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.02); margin-top:18px; }
+/* footer */
+footer{ padding:18px; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.02); margin-top:18px; }
 
-    /* Responsive: mobile adjustments */
-    @media (max-width:880px){
-      .hero{ flex-direction:column; padding:36px 14px; gap:18px; }
-      .nav-links{ display:none; } /* hide desktop links on mobile */
-      .menu-toggle{ display:inline-block; }
-      .nav-right{ gap:8px; }
-      .nft-box{ width:260px; height:260px; }
-      .image-card{ width:130px; height:130px; }
-      h1{ font-size:28px; }
-    }
+/* Responsive */
+@media (max-width:880px){
+  .hero{ flex-direction:column; padding:36px 14px; gap:18px; }
+  .nav-links{ display:none; }
+  .menu-toggle{ display:inline-block; }
+  .nav-right{ gap:8px; }
+  .nft-box{ width:260px; height:260px; }
+  .image-card{ width:130px; height:130px; }
+  h1{ font-size:28px; }
+}
 
-    /* When mobile menu is open (class `.nav-open` on nav) show menu vertically */
-    nav.nav-open .nav-links{
-      display:block; position: absolute; top:64px; left:12px; right:12px; z-index:7;
-      background: linear-gradient(180deg, rgba(6,12,20,0.95), rgba(6,12,20,0.92)); border-radius:12px; padding:12px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
-    }
-    nav.nav-open .nav-links ul{
-      display:flex; flex-direction:column; gap:8px; padding:6px;
-    }
-    nav.nav-open .nav-right{ display:flex; gap:8px; margin-top:8px; flex-direction:row; justify-content:center; width:100%; }
+nav.nav-open .nav-links{
+  display:block; position: absolute; top:64px; left:12px; right:12px; z-index:7;
+  background: linear-gradient(180deg, rgba(6,12,20,0.95), rgba(6,12,20,0.92)); border-radius:12px; padding:12px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+}
+nav.nav-open .nav-links ul{
+  display:flex; flex-direction:column; gap:8px; padding:6px;
+}
+nav.nav-open .nav-right{ display:flex; gap:8px; margin-top:8px; flex-direction:row; justify-content:center; width:100%; }
 
-    /* ensure large images don't overflow on tiny screens */
-    img{ max-width:100%; display:block; height:auto; }
+img{ max-width:100%; display:block; height:auto; }
 
+/* your custom near-bottom glow */
 #near-bottom .list-container {
-    max-width: 520px;
-    margin: 25px auto;
-    padding: 20px;
-    background: rgba(10, 15, 30, 0.85);
-    border-radius: 18px;
-    border: 1px solid rgba(0, 240, 255, 0.3);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.25),
-                0 0 45px rgba(0, 240, 255, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 520px;
+  margin: 25px auto;
+  padding: 20px;
+  background: rgba(10, 15, 30, 0.85);
+  border-radius: 18px;
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.25),
+              0 0 45px rgba(0, 240, 255, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
-/* Hover container effect */
 #near-bottom .list-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 35px rgba(0, 240, 255, 0.45),
-                0 0 60px rgba(0, 240, 255, 0.30);
+  transform: translateY(-5px);
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.45),
+              0 0 60px rgba(0, 240, 255, 0.30);
 }
-
-/* Title */
 #near-bottom h3 {
-    text-align: center;
-    font-size: 22px;
-    color: #00eaff;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+  text-align: center;
+  font-size: 22px;
+  color: #00eaff;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
 }
-
-/* Remove bullets */
-#near-bottom ul {
-    list-style: none;
-    padding: 0;
-}
-
-/* List items */
+#near-bottom ul { list-style: none; padding: 0; }
 #near-bottom li {
-    margin: 12px 0;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  margin: 12px 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-
-/* Links */
 #near-bottom a {
-    color: #00f0ff;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 4px 6px;
-    border-radius: 6px;
-    transition: 0.3s ease;
-    text-shadow: 0 0 12px rgba(0, 240, 255, 0.85);
+  color: #00f0ff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: 0.3s ease;
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.85);
+}
+#near-bottom a:hover {
+  color: #ff007a;
+  text-shadow: 0 0 16px rgba(255, 0, 122, 1);
+  transform: scale(1.05);
 }
 
-/* Hover link neon effect */
-#near-bottom a:hover {
-    color: #ff007a;
-    text-shadow: 0 0 16px rgba(255, 0, 122, 1);
-    transform: scale(1.05);
-}
-/* 🌊 Stronger Water Glow */
+/* wave glow */
 .waves svg path {
   filter: drop-shadow(0 0 20px rgba(0, 238, 255, 0.578));
 }
 
+/* bubble layer */
 #bubble-layer {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 118px; /*bubble zone height*/
+  height: 118px;
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
@@ -233,6 +233,12 @@
   50% { transform: translateX(25px); }
   100% { transform: translateX(0); }
 }
+
+/* make sections transparent so background shows */
+.section {
+  background: transparent;
+}
+
   </style>
 </head>
 <!DOCTYPE html>
@@ -241,7 +247,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <head>
-  <title>FloodFix — Meme Coin</title>
+  <title>FloodFix Meme Coin</title>
   <link rel="icon" type="image/png" href="favicon.png" />
   </head>
 <body>
@@ -261,9 +267,9 @@
         <div class="nav-links" id="nav-links">
           <ul>
             <li><a href="#home">Home</a></li>
-            <li><a href="#buy">Flox Buy</a></li>
+            <li><a href="#buy">FloodFix Buy</a></li>
             <li><a href="#tokenomics">Tokenomics</a></li>
-            <li><a href="#nft">Flox NFT</a></li>
+            <li><a href="#nft">FloodFix NFT</a></li>
             <li><a href="#roadmap">Roadmap</a></li>
             <li><a href="#whitepaper">Whitepaper</a></li>
             <li><a href="#gamefi">GameFi</a></li>
@@ -272,7 +278,7 @@
       </div>
 
       <div class="nav-right">
-        <button class="btn" onclick="buyFlox()">Buy FLOX</button>
+        <button class="btn" onclick="buyFlox()">Buy FloodFix</button>
         <a class="btn secondary" href="#whitepaper">Whitepaper</a>
         <!-- hamburger for mobile -->
         <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
@@ -295,7 +301,7 @@
         </div>
 
         <div class="cta">
-          <button class="btn" onclick="buyFlox()">Buy FLOX</button>
+          <button class="btn" onclick="buyFlox()">Buy FloodFix</button>
           <button class="btn secondary" onclick="document.querySelector('#roadmap').scrollIntoView({behavior:'smooth'})">See Roadmap</button>
         </div>
 
@@ -316,7 +322,7 @@
     <!-- FLOX Buy -->
     <section id="buy" style="padding:24px 18px;">
       <div class="list-container">
-        <h3>Flox Buy</h3>
+        <h3>FloodFix Buy</h3>
         <!--<p class="lead">Add your buy widget inside the container below.</p>-->
         <div id="buy-widget" style="margin-top:12px;"><strong><span style="color:red">COMING SOON!!</span></strong></div>
       </div>
@@ -334,7 +340,7 @@
 
     <!-- FLOX NFT -->
     <section id="nft" style="padding:18px;">
-      <h2 style="margin-bottom:12px">Flox NFT</h2>
+      <h2 style="margin-bottom:12px">FloodFix NFT</h2>
       <div class="image-container" aria-hidden="true">
         <div class="image-card float"><img src="f3.jpg" alt="NFT A (replace)"></div>
         <div class="image-card float"><img src="f7.jpg" alt="NFT B (replace)"></div>
