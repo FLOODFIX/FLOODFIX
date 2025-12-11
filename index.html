@@ -204,11 +204,11 @@ img{ max-width:100%; display:block; height:auto; }
 
 /* bubble layer */
 #bubble-layer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 118px;
+  height: 120px;
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
@@ -238,6 +238,32 @@ img{ max-width:100%; display:block; height:auto; }
 .section {
   background: transparent;
 }
+/* WATER DROP */
+.drop-wrap {
+  width: 120px;
+  height: 160px;
+  background: radial-gradient(circle at 40% 25%, #aef8ff, #4ec9ff 70%);
+  border-radius: 50% 50% 55% 55% / 60% 60% 40% 40%;
+  filter: drop-shadow(0 0 14px #00eaffaa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 17px;
+  font-weight: 700;
+  color: #003044;
+  text-align: center;
+  padding: 15px;
+  line-height: 1.2;
+  animation: wobble 4s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-8px) scale(1.03); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
 </style>
 </head>
 <body>
@@ -339,47 +365,92 @@ img{ max-width:100%; display:block; height:auto; }
         <div class="image-card float"><img src="f2.jpg" alt="NFT C (replace)"></div>
       </div>
     </section>
+        <!-- ROADMAP -->
+<section id="roadmap" class="roadmap-wrap">
 
-    <!-- ROADMAP -->
-    <section id="roadmap" class="roadmap-wrap">
-      <div class="waves" aria-hidden="true">
-        <div style="position:absolute;bottom:0;left:0;width:100%;overflow:hidden;height:80px;">
-          <div style="display:flex; width:200%; animation: translateX 14s linear infinite;">
-            <svg viewBox="0 0 1200 80" preserveAspectRatio="xMinYMin slice" style="width:1200px;height:80px;">
-              <path d="M0,40 C150,10 300,70 450,40 C600,10 750,70 900,40 C1050,10 1200,70 1350,40 L1350,80 L0,80 Z" fill="#002f3a" opacity="0.65"></path>
-            </svg>
-            <svg viewBox="0 0 1200 80" preserveAspectRatio="xMinYMin slice" style="width:1200px;height:80px;">
-              <path d="M0,40 C150,10 300,70 450,40 C600,10 750,70 900,40 C1050,10 1200,70 1350,40 L1350,80 L0,80 Z" fill="#01363f" opacity="0.5"></path>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="roadmap-content">
-        <h2 style="margin-bottom:12px">Roadmap</h2>
-
-        <!-- simple curvy road -->
-        <svg class="roadmap-svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-          <defs>
-            <linearGradient id="roadG" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stop-color="#122a33"/><stop offset="1" stop-color="#05202a"/>
-            </linearGradient>
-          </defs>
-
-          <!-- road -->
-          <path d="M30,220 C200,180 300,60 480,100 C660,140 780,60 980,90 C1100,110 1170,90 1170,90"
-                stroke="url(#roadG)" stroke-width="36" stroke-linecap="round" fill="none" opacity="0.98"></path>
-
-          <!-- dashed center -->
-          <path d="M30,220 C200,180 300,60 480,100 C660,140 780,60 980,90 C1100,110 1170,90 1170,90"
-                stroke="#9feeff" stroke-width="6" stroke-dasharray="16 24" stroke-linecap="round" fill="none" opacity="0.95"></path>
-
-          <!-- markers -->
-          <circle class="marker" cx="120" cy="205" r="12"></circle>
-          <circle class="marker" cx="420" cy="115" r="12"></circle>
-          <circle class="marker" cx="690" cy="135" r="12"></circle>
-          <circle style="" class="marker" cx="980" cy="95" r="12"></circle>
+  <div class="waves" aria-hidden="true">
+    <div style="position:absolute;bottom:0;left:0;width:100%;overflow:hidden;height:80px;">
+      <div style="display:flex; width:200%; animation: translateX 14s linear infinite;">
+        
+        <!-- Wave 1 -->
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="xMinYMin slice" style="width:1200px;height:80px;">
+          <path d="M0,40 C150,10 300,70 450,40 C600,10 750,70 900,40 C1050,10 1200,70 1350,40 L1350,80 L0,80 Z"
+                fill="#002f3a" opacity="0.65"/>
         </svg>
+
+        <!-- Wave 2 -->
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="xMinYMin slice" style="width:1200px;height:80px;">
+          <path d="M0,40 C150,10 300,70 450,40 C600,10 750,70 900,40 C1050,10 1200,70 1350,40 L1350,80 L0,80 Z"
+                fill="#01363f" opacity="0.5"/>
+        </svg>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-content">
+    <h2 style="margin-bottom:16px">Roadmap</h2>
+
+    <!-- CURVY ROAD SVG -->
+    <svg class="roadmap-svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid meet">
+
+      <defs>
+        <linearGradient id="roadG" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#122a33"/>
+          <stop offset="1" stop-color="#05202a"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Road main line -->
+      <path d="M30,220 C200,180 300,60 480,100 C660,140 780,60 980,90 C1100,110 1170,90 1170,90"
+            stroke="url(#roadG)" stroke-width="36" stroke-linecap="round" fill="none"/>
+
+      <!-- Road dashed center -->
+      <path d="M30,220 C200,180 300,60 480,100 C660,140 780,60 980,90 C1100,110 1170,90 1170,90"
+            stroke="#9feeff" stroke-width="6" stroke-dasharray="16 24" stroke-linecap="round" fill="none"/>
+
+      <!-- ========== WATER DROP MARKERS ========== -->
+
+      <!-- Phase 1 -->
+      <g class="drop" transform="translate(100,150)">
+        <foreignObject width="150" height="190">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="drop-wrap">
+            Phase 1<br/>Launch
+          </div>
+        </foreignObject>
+      </g>
+
+      <!-- Phase 2 -->
+      <g class="drop" transform="translate(380,50)">
+        <foreignObject width="150" height="190">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="drop-wrap">
+            Phase 2<br/>Marketing
+          </div>
+        </foreignObject>
+      </g>
+
+      <!-- Phase 3 -->
+      <g class="drop" transform="translate(650,85)">
+        <foreignObject width="150" height="190">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="drop-wrap">
+            Phase 3<br/>Listings
+          </div>
+        </foreignObject>
+      </g>
+
+      <!-- Phase 4 -->
+      <g class="drop" transform="translate(930,45)">
+        <foreignObject width="150" height="190">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="drop-wrap">
+            Phase 4<br/>GameFi
+          </div>
+        </foreignObject>
+      </g>
+
+    </svg>
+
+  </div>
+</section>
 
         <!-- Roadmap details below for responsive layout -->
         <div style="margin-top:14px;">
@@ -449,172 +520,37 @@ img{ max-width:100%; display:block; height:auto; }
     <footer>© <strong>FloodFix🌊</strong> | All rights reserved.</footer>
   </div>
 
-  <!-- tsParticles -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.min.js"></script>
-  <script>
-    /* particles config (merged into a working tsParticles config) */
-    const particlesConfig = {
-      fullScreen: { enable: false },
-      fpsLimit: 60,
-      particles: {
-        number: { value: 80, density: { enable: true, area: 800 } },
-        color: { value: "#00eaff" },
-        shape: { type: "circle" },
-        opacity: { value: 0.45 },
-        size: { value: 3, random: { enable: true, minimumValue: 1 } },
-        move: { enable: true, speed: 0.9, random: false, outModes: { default: "out" } },
-        links: { enable: true, distance: 140, color: "#00eaff", opacity: 0.06, width: 1 }
-      },
-      interactivity: {
-        events: {
-          onHover: { enable: true, mode: "repulse" },
-          onClick: { enable: true, mode: "push" },
-          resize: true
-        },
-        modes: { repulse: { distance: 80 }, push: { quantity: 2 } }
-      },
-      detectRetina: true
-    };
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      try {
-        await tsParticles.load("tsparticles", particlesConfig);
-      } catch(e){ console.warn('tsParticles failed to load', e); }
-    });
-
-    /* small helpers */
-    function buyFlox(){
-      const widget = document.getElementById('buy-widget');
-      if(widget && widget.innerHTML.trim().length>0){
-        alert("Open your buy widget or implement web3 flow here.");
-      } else {
-        alert("Buy FLOX — add your buy widget code into the #buy-widget container.");
-      }
-    }
-
-    // Smooth scroll anchors
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', function(e){
-        const href = this.getAttribute('href');
-        const target = document.querySelector(href);
-        if(target){
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-          // if nav was open (mobile), close it after click
-          document.getElementById('site-nav').classList.remove('nav-open');
-        }
-      });
-    });
-
-    // Mobile menu toggle
-    const menuToggle = document.getElementById('menu-toggle');
-    const siteNav = document.getElementById('site-nav');
-    if(menuToggle){
-      menuToggle.addEventListener('click', ()=>{
-        siteNav.classList.toggle('nav-open');
-      });
-    }
-
-    // Close mobile menu on resize to desktop
-    window.addEventListener('resize', ()=>{
-      if(window.innerWidth > 880){
-        siteNav.classList.remove('nav-open');
-      }
-    });
-  </script>
   <script>
 document.addEventListener("DOMContentLoaded", () => {
-
-  console.log("Bubble System Loaded");
-
   const bubbleLayer = document.getElementById("bubble-layer");
-  if (!bubbleLayer) {
-    console.error("Bubble Layer NOT FOUND");
-    return;
-  }
-
-  function spawnBubbles() {
-    for (let i = 0; i < 20; i++) {
-
-      const b = document.createElement("div");
-      b.className = "bubble";
-
-      const size = Math.random() * 40 + 10;
-      b.style.width = size + "px";
-      b.style.height = size + "px";
-
-      b.style.left = Math.random() * 100 + "vw";
-      b.style.bottom = "-80px";
-
-      b.style.setProperty("--speed", (Math.random() * 10 + 5) + "s");
-
-      bubbleLayer.appendChild(b);
-
-      setTimeout(() => b.remove(), 16000);
-    }
-  }
-
-  spawnBubbles();
-  setInterval(spawnBubbles, 2000);
-});
-</script>
-<script>
-  const bubbleLayer = document.getElementById("bubble-layer");
+  if (!bubbleLayer) return;
 
   function spawnBubble() {
     const bubble = document.createElement("div");
-    bubble.classList.add("bubble");
+    bubble.className = "bubble";
 
-    // random size
-    const size = Math.random() * 40 + 20; 
+    // Random size
+    const size = Math.random() * 30 + 10; 
     bubble.style.width = size + "px";
     bubble.style.height = size + "px";
 
-    // random horizontal position
-    bubble.style.left = Math.random() * window.innerWidth + "px";
-
-    // random speed
-    bubble.style.setProperty("--speed", (6 + Math.random() * 6) + "s");
-
-    // add bubble
-    bubbleLayer.appendChild(bubble);
-
-    // remove after animation so it doesn't build up
-    setTimeout(() => bubble.remove(), 12000);
-  }
-
-  // spawn bubbles continuously
-  setInterval(spawnBubble, 350);
-</script>
-<script>
-function spawnBubbles() {
-  const layer = document.getElementById("bubble-layer");
-  if (!layer) return;
-
-  setInterval(() => {
-    const bubble = document.createElement("div");
-    bubble.classList.add("bubble");
-
-    // Random bubble size
-    const size = Math.random() * 18 + 8; 
-    bubble.style.width = size + "px";
-    bubble.style.height = size + "px";
-
-    // Random horizontal start
-    bubble.style.left = Math.random() * 100 + "%";
+    // Random horizontal position
+    bubble.style.left = Math.random() * 100 + "vw";
+    bubble.style.bottom = "0px"; // always starts at bottom
 
     // Random rise speed
     bubble.style.setProperty("--speed", (4 + Math.random() * 4) + "s");
 
-    layer.appendChild(bubble);
+    // Add to layer
+    bubbleLayer.appendChild(bubble);
 
-    // Remove bubble when finished
-    setTimeout(() => bubble.remove(), 7000);
-  }, 350);
-}
+    // Remove after animation
+    setTimeout(() => bubble.remove(), 8000);
+  }
 
-spawnBubbles();
+  // Spawn continuously
+  setInterval(spawnBubble, 300);
+});
 </script>
-
 </body>
 </html>
